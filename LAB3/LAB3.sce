@@ -4,15 +4,6 @@
 function[N, A, b] = read_data(filepath)
     f=mopen(filepath, 'r');
     N=mfscanf(f,'%d');
-    for i=1:N
-        for j=1:N
-            A(i,j)=mfscanf(f,'%lg');
-        end
-    end
-    for i=1:N
-        b(i)=mfscanf(f,'%lg');
-    end
-    mclose(f);
 endfunction
 
 function[c, s] = get_cs(a1, a2)
@@ -95,7 +86,7 @@ function[A_h, b_h, x_h] = hilbert_matrix(N)
     end
 endfunction
 
-[N, A, b] = read_data("data.txt"); // Считываем размерность, матрицу коэф., вектор св. членов 
+[N] = read_data("data.txt"); // Считываем размерность, матрицу коэф., вектор св. членов 
 [A_h, b_h, x_h] = hilbert_matrix(N); //  Генирируем матрицу Гильберта, решение и вектор св. членов
 A_b = cat(2, A_h, b_h'); // Конкатенируем сгенерированные матрицу коэф. и вектор св. членов для решения методом вращений 
 disp(A_b);
@@ -115,6 +106,4 @@ disp(r_lu_norm);
 
 cond_number_h = norm(A_h, "fro") * norm(inv(A_h), "fro"); // Число обусл. матрицы Гильберта
 disp(cond_number_h);
-cond_number = norm(A, "fro") * norm(inv(A), "fro"); // Число обусл. матрицы из прошлой лаб. работы
-disp(cond_number);
 
